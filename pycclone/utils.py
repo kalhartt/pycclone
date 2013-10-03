@@ -22,6 +22,15 @@ def destination(fname, outdir):
     filename = os.path.splitext(os.path.relpath(fname, DESTROOT))[0]
     return os.path.join(outdir, filename)
 
+def split_path(path):
+    """
+    Splits a path into a list of its directories and filename
+    """
+    split = list(os.path.split(path))
+    while split[0]:
+        split = list(os.path.split(split[0])) + split[1:]
+    return split[1:]
+
 class file_or_stdout(object):
     """
     Context manager returning either a file handle
