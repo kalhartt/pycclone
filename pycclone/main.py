@@ -1,3 +1,7 @@
+"""
+pycclone.main
+=============
+"""
 import argparse
 import logging
 import json
@@ -15,25 +19,42 @@ log = logging.getLogger(__name__)
 # The command-line entry point
 def main():
     logging.info('Parsing commandline arguments')
-
-    # Supported command line arguments are
-    # Short | Long | Parameters | Description
-    # -p | --paths | |If given, output documentation structure will mirror the source code structure
-    # -d | --directory | str | If given, output documentation will be written into this folder. Otherwise it is printed to stdout
-    # -i | --index-file | str | Filenames matching this pattern will be written out as index.html instead of filename.html
-    # -l | --language | str | Forces the language to a given language. Languages are added here #TODO
-    # src | | str[] | List of files to have documentation generated
-    parser = argparse.ArgumentParser(description='Generate documentation from sourcecode')
-    parser.add_argument('-p', '--paths', action='store_true', default=None,
-                        help='Preserve path structure of original files')
-    parser.add_argument('-d', '--directory', action='store', type=str, default=None,
-                        help='Output directory, writes to stdout if unspecified')
-    parser.add_argument('-i', '--index-file', action='store', type=str, default=None,
-                        help='Filename pattern to generate index.html from')
-    parser.add_argument('-l', '--language', action='store', type=str, default=None,
-                        help='Force the language for the given files')
-    parser.add_argument('src', action='store', type=str, nargs='+', default=None,
-                        help='Files to generate documentation for')
+    
+    ###Commandline Arguments
+    parser = argparse.ArgumentParser(
+            description='Generate documentation from sourcecode')
+    parser.add_argument(
+            '-p',
+            '--paths',
+            action='store_true',
+            default=None,
+            help='Preserve path structure of original files')
+    parser.add_argument(
+            '-d',
+            '--directory',
+            action='store',
+            type=str,
+            default=None,
+            help='Output directory, writes to stdout if unspecified')
+    parser.add_argument('-i',
+            '--index-file',
+            action='store',
+            type=str,
+            default=None,
+            help='Filename pattern to generate index.html from')
+    parser.add_argument(
+            '-l',
+            '--language',
+            action='store',
+            type=str,
+            default=None,
+            help='Force the language for the given files')
+    parser.add_argument('src',
+            action='store',
+            type=str,
+            nargs='+',
+            default=None,
+            help='Files to generate documentation for')
 
     # Filter out arguments that weren't actually passed on the commandline
     args = dict((k, v) for k, v in vars(parser.parse_args()).items() if v is not None)
