@@ -78,7 +78,7 @@ def main():
     # Tell utils.destination which dir to treat as output root
     utils.DESTROOT = os.path.dirname(os.path.commonprefix(settings['src']))
 
-    template.preprocess(settings['src'])
+    template.preprocess([utils.destination(x, settings['directory']) for x in settings['src']])
     for src in settings['src']:
         Source(src).generate_docs(template, formatter, highlighter, settings['directory'])
 
