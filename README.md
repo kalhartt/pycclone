@@ -2,6 +2,7 @@ pycclone
 ========
 
 A plugin based documentation generator based off the [Docco](http://jashkenas.github.io/docco/) and [Pycco](http://fitzgen.github.io/pycco/) projects.
+Check out the [self-generated documentation](http://kalhartt.github.io/pycclone/docs/main.html)
 
 ### Why pycclone?
 
