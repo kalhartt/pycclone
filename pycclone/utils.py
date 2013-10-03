@@ -9,6 +9,8 @@ import re
 import sys
 import StringIO
 
+DESTROOT = ''
+
 def destination(fname, outdir):
     """
     Calculates the destination file (excluding the extension) for a given
@@ -16,8 +18,8 @@ def destination(fname, outdir):
     """
     if not outdir:
         return fname
-
-    filename = os.path.splitext(fname)[0]
+    
+    filename = os.path.splitext(os.path.relpath(fname, DESTROOT))[0]
     return os.path.join(outdir, filename)
 
 class file_or_stdout(object):

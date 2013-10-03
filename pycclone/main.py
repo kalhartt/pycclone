@@ -4,6 +4,7 @@ import json
 import pycclone
 import os
 import sys
+from pycclone import utils
 from pycclone.templates import get_template
 from pycclone.highlighters import get_highlighter
 from pycclone.formatters import get_formatter
@@ -73,6 +74,9 @@ def main():
             os.makedirs(settings['directory'])
         template.copy_static(settings['directory'])
         highlighter.copy_static(settings['directory'])
+
+    # Tell utils.destination which dir to treat as output root
+    utils.DESTROOT = os.path.dirname(os.path.commonprefix(settings['src']))
 
     template.preprocess(settings['src'])
     for src in settings['src']:
