@@ -1,0 +1,7 @@
+{ ".erl": { 
+    "name": "erlang",
+    "symbol": "%%",
+    "multistart": null,
+    "multiend": null
+    }
+}

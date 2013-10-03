@@ -1,0 +1,7 @@
+{ ".c": { 
+    "name": "c",
+    "symbol": "//",
+    "multistart": "/*",
+    "multiend": "*/"
+    }
+}

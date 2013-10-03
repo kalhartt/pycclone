@@ -1,0 +1,20 @@
+{
+    "template": "bootstrap3",
+    "formatter_args": {
+        "extensions": ["headerid", "fenced_code"]
+    },
+    "template_args": {
+        "stylesheets": [
+            "/pygments.css",
+            "/style.css",
+            "//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css"
+        ],
+        "title": "Documentation"
+    },
+    "highlighter_args": {
+        "formatter": {
+            "cssclass": "pygments"
+        },
+        "lexer": {}
+    }
+}

@@ -1,0 +1,7 @@
+{ ".tcl": { 
+    "name": "tcl",
+    "symbol": "#",
+    "multistart": null,
+    "multiend": null
+    }
+}

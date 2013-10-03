@@ -1,0 +1,7 @@
+{ ".coffee": { 
+    "name": "coffee-script",
+    "symbol": "#",
+    "multistart": "###",
+    "multiend": "###"
+    }
+}

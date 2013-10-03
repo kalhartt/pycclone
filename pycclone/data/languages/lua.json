@@ -1,0 +1,7 @@
+{ ".lua": { 
+    "name": "lua",
+    "symbol": "--",
+    "multistart": "--[[",
+    "multiend": "]]--"
+    }
+}

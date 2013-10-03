@@ -1,0 +1,7 @@
+{ ".rb": { 
+    "name": "ruby",
+    "symbol": "#",
+    "multistart": "=begin",
+    "multiend": "=end"
+    }
+}

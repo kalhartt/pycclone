@@ -1,0 +1,7 @@
+{ ".hs": { 
+    "name": "haskell",
+    "symbol": "--",
+    "multistart": "{-",
+    "multiend": "-}"
+    }
+}

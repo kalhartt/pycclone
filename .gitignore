@@ -1,5 +1,9 @@
 *.py[cod]
 
+# Virtualenv
+venv2
+venv3
+
 # C extensions
 *.so
 

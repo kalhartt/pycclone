@@ -1,0 +1,7 @@
+{ ".js": { 
+    "name": "javascript",
+    "symbol": "//",
+    "multistart": "/*",
+    "multiend": "*/"
+    }
+}

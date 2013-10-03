@@ -1,0 +1,7 @@
+{ ".pl": { 
+    "name": "perl",
+    "symbol": "#",
+    "multistart": null,
+    "multiend": null
+    }
+}

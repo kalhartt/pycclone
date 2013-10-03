@@ -1,0 +1,7 @@
+{ ".scm": { 
+    "name": "scheme",
+    "symbol": ";;",
+    "multistart": "#|",
+    "multiend": "|#"
+    }
+}
