@@ -1,12 +1,12 @@
 {
-    "template": "bootstrap3",
+    "template": "tmp_bootstrap3",
     "formatter_args": {
         "extensions": ["headerid", "fenced_code", "tables"]
     },
     "template_args": {
         "stylesheets": [
-            "/docs/pygments.css",
-            "/docs/style.css",
+            "/pycclone/pygments.css",
+            "/pycclone/style.css",
             "//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css"
         ],
         "title": "Documentation"

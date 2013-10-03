@@ -65,9 +65,9 @@ def main():
     # `None` is a special value for directory that forces output to STDOUT
     settings = {
         'directory': None,
-        'template': 'basic',
-        'formatter': 'markdown',
-        'highlighter': 'pygments',
+        'template': 'tmp_basic',
+        'formatter': 'fmt_markdown',
+        'highlighter': 'hlt_pygments',
         'template_args': {},
         'formatter_args': {},
         'highlighter_args': {

@@ -13,9 +13,6 @@ def get_formatter(name):
     Loads a formatter module with the given name.
     """
 
-    if not name.startswith('fmt_'):
-        name = 'fmt_' + name
-
     # Is it already in the path?
     try:
         return import_module('pycclone.formatters.' + name)
@@ -23,5 +20,5 @@ def get_formatter(name):
         pass
 
     # Import from user folder
-    fpath = os.path.join(USERDIR, 'formatters', name + '.py')
+    fpath = os.path.join(USERDIR, 'formatters', name, name + '.py')
     return load_source('pycclone.formatters.' + name, fpath)

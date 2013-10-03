@@ -19,9 +19,6 @@ def get_template(name):
     **Template classes are not validated.**
     """
 
-    if not name.startswith('tmp_'):
-        name = 'tmp_' + name
-
     # Is it already in the path?
     try:
         return import_module('pycclone.templates.' + name)
@@ -29,5 +26,5 @@ def get_template(name):
         pass
 
     # Import from user folder
-    fpath = os.path.join(USERDIR, 'templates', name + '.py')
+    fpath = os.path.join(USERDIR, 'templates', name, name + '.py')
     return load_source('pycclone.templates.' + name, fpath)

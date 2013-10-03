@@ -13,9 +13,6 @@ def get_highlighter(name):
     Loads a highlighter module with the given name.
     """
 
-    if not name.startswith('hlt_'):
-        name = 'hlt_' + name
-
     # Is it already in the path?
     try:
         return import_module('.' + name, 'pycclone.highlighters')
@@ -23,5 +20,5 @@ def get_highlighter(name):
         pass
 
     # Import from user folder
-    fpath = os.path.join(USERDIR, 'highlighters', name + '.py')
+    fpath = os.path.join(USERDIR, 'highlighters', name, name + '.py')
     return load_source('pycclone.highlighters.' + name, fpath)
