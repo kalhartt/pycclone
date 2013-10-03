@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="stylesheet" href="/docs/pygments.css">
+    
+        <link rel="stylesheet" href="/docs/style.css">
+    
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css">
+    
+    <title>Documentation</title>
+    </head>
+    <nav class="navbar navbar-default navbar-fixed-top" role=navigation>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="docs">Documentation</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">docs<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                            <li><a href="/docs/__init__.html">__init__</a></li>
+                        
+                            <li><a href="/docs/main.html">main</a></li>
+                        
+                            <li><a href="/docs/source.html">source</a></li>
+                        
+                            <li><a href="/docs/utils.html">utils</a></li>
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                            <li><a href="/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
+                        
+                            <li><a href="/docs/formatters/__init__.html">__init__</a></li>
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                            <li><a href="/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
+                        
+                            <li><a href="/docs/highlighters/__init__.html">__init__</a></li>
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">templates<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                            <li><a href="/docs/templates/base_template.html">base_template</a></li>
+                        
+                            <li><a href="/docs/templates/__init__.html">__init__</a></li>
+                        
+                            <li><a href="/docs/templates/tmp_basic.html">tmp_basic</a></li>
+                        
+                    </ul>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <body data-spy="scroll" data-target="#navbar">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-5"><h1 id="pycclonemain">pycclone.main</h1></div>
+            <div class="col-md-7"><div class="pygments"><pre><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pycclone</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pycclone</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">pycclone.templates</span> <span class="kn">import</span> <span class="n">get_template</span>
+<span class="kn">from</span> <span class="nn">pycclone.highlighters</span> <span class="kn">import</span> <span class="n">get_highlighter</span>
+<span class="kn">from</span> <span class="nn">pycclone.formatters</span> <span class="kn">import</span> <span class="n">get_formatter</span>
+<span class="kn">from</span> <span class="nn">.source</span> <span class="kn">import</span> <span class="n">Source</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>The command-line entry point</p></div>
+            <div class="col-md-7"><div class="pygments"><pre><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Parsing commandline arguments&#39;</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><h2 id="commandline-arguments">Commandline Arguments</h2></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+            <span class="n">description</span><span class="o">=</span><span class="s">&#39;Generate documentation from sourcecode&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s">&#39;-p&#39;</span><span class="p">,</span>
+            <span class="s">&#39;--paths&#39;</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Preserve path structure of original files&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s">&#39;-d&#39;</span><span class="p">,</span>
+            <span class="s">&#39;--directory&#39;</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Output directory, writes to stdout if unspecified&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-i&#39;</span><span class="p">,</span>
+            <span class="s">&#39;--index-file&#39;</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Filename pattern to generate index.html from&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s">&#39;-l&#39;</span><span class="p">,</span>
+            <span class="s">&#39;--language&#39;</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Force the language for the given files&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;src&#39;</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Files to generate documentation for&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Filter out arguments that weren't actually passed on the commandline</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Parsed args: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Since the commandline arguments were filtered, we can't use defaults
+ provided by argparse. Instead use a default value dictionary
+ <code>None</code> is a special value for directory that forces output to STDOUT</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;directory&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+        <span class="s">&#39;template&#39;</span><span class="p">:</span> <span class="s">&#39;basic&#39;</span><span class="p">,</span>
+        <span class="s">&#39;formatter&#39;</span><span class="p">:</span> <span class="s">&#39;markdown&#39;</span><span class="p">,</span>
+        <span class="s">&#39;highlighter&#39;</span><span class="p">:</span> <span class="s">&#39;pygments&#39;</span><span class="p">,</span>
+        <span class="s">&#39;template_args&#39;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="s">&#39;formatter_args&#39;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="s">&#39;highlighter_args&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;lexer&#39;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s">&#39;formatter&#39;</span><span class="p">:</span> <span class="p">{}</span>
+        <span class="p">},</span>
+   <span class="p">}</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Read the local settings file if present and update
+ with the command line arguments</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">pycclone</span><span class="o">.</span><span class="n">SETTINGSFILE</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pycclone</span><span class="o">.</span><span class="n">SETTINGSFILE</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Parsed settings: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Get the modules requested.</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;template&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;template_args&#39;</span><span class="p">])</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">get_formatter</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;formatter&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;formatter_args&#39;</span><span class="p">])</span>
+    <span class="n">highlighter</span> <span class="o">=</span> <span class="n">get_highlighter</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;highlighter&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">Highlighter</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;highlighter_args&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Setup the output directory</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="k">if</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">]):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span>
+        <span class="n">template</span><span class="o">.</span><span class="n">copy_static</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span>
+        <span class="n">highlighter</span><span class="o">.</span><span class="n">copy_static</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Tell utils.destination which dir to treat as output root</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">utils</span><span class="o">.</span><span class="n">DESTROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">commonprefix</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]))</span>
+
+    <span class="n">template</span><span class="o">.</span><span class="n">preprocess</span><span class="p">([</span><span class="n">utils</span><span class="o">.</span><span class="n">destination</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]])</span>
+    <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]:</span>
+        <span class="n">Source</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">highlighter</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+        </div>
+        
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    </body>
+</html>
