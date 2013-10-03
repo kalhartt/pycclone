@@ -29,13 +29,13 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">docs<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
-                            <li><a href="/docs/__init__.html">__init__</a></li>
+                            <li><a href="/pycclone/docs/__init__.html">__init__</a></li>
                         
-                            <li><a href="/docs/main.html">main</a></li>
+                            <li><a href="/pycclone/docs/main.html">main</a></li>
                         
-                            <li><a href="/docs/source.html">source</a></li>
+                            <li><a href="/pycclone/docs/source.html">source</a></li>
                         
-                            <li><a href="/docs/utils.html">utils</a></li>
+                            <li><a href="/pycclone/docs/utils.html">utils</a></li>
                         
                     </ul>
                 </li>
@@ -44,9 +44,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
-                            <li><a href="/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
+                            <li><a href="/pycclone/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
                         
-                            <li><a href="/docs/formatters/__init__.html">__init__</a></li>
+                            <li><a href="/pycclone/docs/formatters/__init__.html">__init__</a></li>
                         
                     </ul>
                 </li>
@@ -55,9 +55,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
-                            <li><a href="/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
+                            <li><a href="/pycclone/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
                         
-                            <li><a href="/docs/highlighters/__init__.html">__init__</a></li>
+                            <li><a href="/pycclone/docs/highlighters/__init__.html">__init__</a></li>
                         
                     </ul>
                 </li>
@@ -66,11 +66,11 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">templates<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
-                            <li><a href="/docs/templates/base_template.html">base_template</a></li>
+                            <li><a href="/pycclone/docs/templates/base_template.html">base_template</a></li>
                         
-                            <li><a href="/docs/templates/__init__.html">__init__</a></li>
+                            <li><a href="/pycclone/docs/templates/__init__.html">__init__</a></li>
                         
-                            <li><a href="/docs/templates/tmp_basic.html">tmp_basic</a></li>
+                            <li><a href="/pycclone/docs/templates/tmp_basic.html">tmp_basic</a></li>
                         
                     </ul>
                 </li>
@@ -83,7 +83,8 @@
     <div class="container">
         
         <div class="row">
-            <div class="col-md-5"><h1 id="pycclonemain">pycclone.main</h1></div>
+            <div class="col-md-5"><h1 id="pycclonemain">pycclone.main</h1>
+<p>This is where the commandline interface is built.</p></div>
             <div class="col-md-7"><div class="pygments"><pre><span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -115,24 +116,12 @@
             <div class="col-md-7"><div class="pygments"><pre>    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
             <span class="n">description</span><span class="o">=</span><span class="s">&#39;Generate documentation from sourcecode&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s">&#39;-p&#39;</span><span class="p">,</span>
-            <span class="s">&#39;--paths&#39;</span><span class="p">,</span>
-            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Preserve path structure of original files&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s">&#39;-d&#39;</span><span class="p">,</span>
             <span class="s">&#39;--directory&#39;</span><span class="p">,</span>
             <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
             <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
             <span class="n">help</span><span class="o">=</span><span class="s">&#39;Output directory, writes to stdout if unspecified&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-i&#39;</span><span class="p">,</span>
-            <span class="s">&#39;--index-file&#39;</span><span class="p">,</span>
-            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Filename pattern to generate index.html from&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s">&#39;-l&#39;</span><span class="p">,</span>
             <span class="s">&#39;--language&#39;</span><span class="p">,</span>
@@ -140,6 +129,13 @@
             <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
             <span class="n">help</span><span class="o">=</span><span class="s">&#39;Force the language for the given files&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s">&#39;-r&#39;</span><span class="p">,</span>
+            <span class="s">&#39;--root-link&#39;</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Path to prepend to all links, must have a trailing &quot;/&quot;&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;src&#39;</span><span class="p">,</span>
             <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
             <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
@@ -164,9 +160,10 @@
  <code>None</code> is a special value for directory that forces output to STDOUT</p></div>
             <div class="col-md-7"><div class="pygments"><pre>    <span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">&#39;directory&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-        <span class="s">&#39;template&#39;</span><span class="p">:</span> <span class="s">&#39;basic&#39;</span><span class="p">,</span>
-        <span class="s">&#39;formatter&#39;</span><span class="p">:</span> <span class="s">&#39;markdown&#39;</span><span class="p">,</span>
-        <span class="s">&#39;highlighter&#39;</span><span class="p">:</span> <span class="s">&#39;pygments&#39;</span><span class="p">,</span>
+        <span class="s">&#39;root_link&#39;</span><span class="p">:</span> <span class="s">&#39;/&#39;</span><span class="p">,</span>
+        <span class="s">&#39;template&#39;</span><span class="p">:</span> <span class="s">&#39;tmp_basic&#39;</span><span class="p">,</span>
+        <span class="s">&#39;formatter&#39;</span><span class="p">:</span> <span class="s">&#39;fmt_markdown&#39;</span><span class="p">,</span>
+        <span class="s">&#39;highlighter&#39;</span><span class="p">:</span> <span class="s">&#39;hlt_pygments&#39;</span><span class="p">,</span>
         <span class="s">&#39;template_args&#39;</span><span class="p">:</span> <span class="p">{},</span>
         <span class="s">&#39;formatter_args&#39;</span><span class="p">:</span> <span class="p">{},</span>
         <span class="s">&#39;highlighter_args&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -215,7 +212,7 @@
             <div class="col-md-5"><p>Tell utils.destination which dir to treat as output root</p></div>
             <div class="col-md-7"><div class="pygments"><pre>    <span class="n">utils</span><span class="o">.</span><span class="n">DESTROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">commonprefix</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]))</span>
 
-    <span class="n">template</span><span class="o">.</span><span class="n">preprocess</span><span class="p">([</span><span class="n">utils</span><span class="o">.</span><span class="n">destination</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]])</span>
+    <span class="n">template</span><span class="o">.</span><span class="n">preprocess</span><span class="p">([</span><span class="n">utils</span><span class="o">.</span><span class="n">destination</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]],</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;root_link&#39;</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]:</span>
         <span class="n">Source</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">highlighter</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span>
 

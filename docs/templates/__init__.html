@@ -29,13 +29,13 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">docs<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
-                            <li><a href="/docs/__init__.html">__init__</a></li>
+                            <li><a href="/pycclone/docs/__init__.html">__init__</a></li>
                         
-                            <li><a href="/docs/main.html">main</a></li>
+                            <li><a href="/pycclone/docs/main.html">main</a></li>
                         
-                            <li><a href="/docs/source.html">source</a></li>
+                            <li><a href="/pycclone/docs/source.html">source</a></li>
                         
-                            <li><a href="/docs/utils.html">utils</a></li>
+                            <li><a href="/pycclone/docs/utils.html">utils</a></li>
                         
                     </ul>
                 </li>
@@ -44,9 +44,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
-                            <li><a href="/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
+                            <li><a href="/pycclone/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
                         
-                            <li><a href="/docs/formatters/__init__.html">__init__</a></li>
+                            <li><a href="/pycclone/docs/formatters/__init__.html">__init__</a></li>
                         
                     </ul>
                 </li>
@@ -55,9 +55,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
-                            <li><a href="/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
+                            <li><a href="/pycclone/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
                         
-                            <li><a href="/docs/highlighters/__init__.html">__init__</a></li>
+                            <li><a href="/pycclone/docs/highlighters/__init__.html">__init__</a></li>
                         
                     </ul>
                 </li>
@@ -66,11 +66,11 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">templates<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
-                            <li><a href="/docs/templates/base_template.html">base_template</a></li>
+                            <li><a href="/pycclone/docs/templates/base_template.html">base_template</a></li>
                         
-                            <li><a href="/docs/templates/__init__.html">__init__</a></li>
+                            <li><a href="/pycclone/docs/templates/__init__.html">__init__</a></li>
                         
-                            <li><a href="/docs/templates/tmp_basic.html">tmp_basic</a></li>
+                            <li><a href="/pycclone/docs/templates/tmp_basic.html">tmp_basic</a></li>
                         
                     </ul>
                 </li>
@@ -109,15 +109,8 @@
         
         <div class="row">
             <div class="col-md-5"><p>Loads a template module with the given name.
-<strong>Template classes are not validated.</strong></p></div>
-            <div class="col-md-7"><div class="pygments"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;tmp_&#39;</span><span class="p">):</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;tmp_&#39;</span> <span class="o">+</span> <span class="n">name</span>
-</pre></div>
-</div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-5"><p>Is it already in the path?</p></div>
+<strong>Template classes are not validated.</strong></p>
+<p>Is it already in the path?</p></div>
             <div class="col-md-7"><div class="pygments"><pre>    <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">import_module</span><span class="p">(</span><span class="s">&#39;pycclone.templates.&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
@@ -128,7 +121,7 @@
         
         <div class="row">
             <div class="col-md-5"><p>Import from user folder</p></div>
-            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">fpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">USERDIR</span><span class="p">,</span> <span class="s">&#39;templates&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#39;.py&#39;</span><span class="p">)</span>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">fpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">USERDIR</span><span class="p">,</span> <span class="s">&#39;templates&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#39;.py&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">load_source</span><span class="p">(</span><span class="s">&#39;pycclone.templates.&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span> <span class="n">fpath</span><span class="p">)</span>
 </pre></div>
 </div>
