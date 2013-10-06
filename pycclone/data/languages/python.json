@@ -1,5 +1,6 @@
-{ ".py": { 
+{ "python": { 
     "name": "python",
+    "extension": ".py",
     "symbol": "#",
     "multistart": "\"\"\"",
     "multiend": "\"\"\""

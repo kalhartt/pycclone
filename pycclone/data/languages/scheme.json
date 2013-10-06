@@ -1,5 +1,6 @@
-{ ".scm": { 
+{ "scheme": { 
     "name": "scheme",
+    "extension": ".scm",
     "symbol": ";;",
     "multistart": "#|",
     "multiend": "|#"

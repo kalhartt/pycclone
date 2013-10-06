@@ -1,5 +1,6 @@
-{ ".rb": { 
+{ "ruby": { 
     "name": "ruby",
+    "extension": ".rb",
     "symbol": "#",
     "multistart": "=begin",
     "multiend": "=end"

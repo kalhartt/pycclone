@@ -1,5 +1,6 @@
-{ ".sql": { 
+{ "sql": { 
     "name": "sql",
+    "extension": ".sql",
     "symbol": "--",
     "multistart": null,
     "multiend": null

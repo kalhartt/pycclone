@@ -1,5 +1,6 @@
-{ ".tcl": { 
+{ "tcl": { 
     "name": "tcl",
+    "extension": ".tcl",
     "symbol": "#",
     "multistart": null,
     "multiend": null

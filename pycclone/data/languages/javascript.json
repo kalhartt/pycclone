@@ -1,5 +1,6 @@
-{ ".js": { 
+{ "javascript": { 
     "name": "javascript",
+    "extension": ".js",
     "symbol": "//",
     "multistart": "/*",
     "multiend": "*/"

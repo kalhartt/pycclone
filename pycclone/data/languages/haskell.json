@@ -1,5 +1,6 @@
-{ ".hs": { 
+{ "haskell": { 
     "name": "haskell",
+    "extension": ".hs",
     "symbol": "--",
     "multistart": "{-",
     "multiend": "-}"

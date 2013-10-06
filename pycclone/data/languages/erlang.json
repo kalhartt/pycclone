@@ -1,5 +1,6 @@
-{ ".erl": { 
+{ "erlang": { 
     "name": "erlang",
+    "extension": ".erl",
     "symbol": "%%",
     "multistart": null,
     "multiend": null

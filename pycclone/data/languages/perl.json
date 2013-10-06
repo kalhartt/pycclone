@@ -1,5 +1,6 @@
-{ ".pl": { 
+{ "perl": { 
     "name": "perl",
+    "extension": ".pl",
     "symbol": "#",
     "multistart": null,
     "multiend": null

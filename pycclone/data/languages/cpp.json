@@ -1,5 +1,6 @@
-{ ".cpp": { 
+{ "cpp": { 
     "name": "cpp",
+    "extension": ".cpp",
     "symbol": "//",
     "multistart": null,
     "multiend": null

@@ -1,4 +1,5 @@
 {
+    "root_link": "/pycclone/",
     "template": "tmp_bootstrap3",
     "formatter_args": {
         "extensions": ["headerid", "fenced_code", "tables"]

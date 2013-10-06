@@ -1,6 +1,8 @@
 """
 pycclone.main
 =============
+
+This is where the commandline interface is built.
 """
 import argparse
 import logging
@@ -24,24 +26,12 @@ def main():
     parser = argparse.ArgumentParser(
             description='Generate documentation from sourcecode')
     parser.add_argument(
-            '-p',
-            '--paths',
-            action='store_true',
-            default=None,
-            help='Preserve path structure of original files')
-    parser.add_argument(
             '-d',
             '--directory',
             action='store',
             type=str,
             default=None,
             help='Output directory, writes to stdout if unspecified')
-    parser.add_argument('-i',
-            '--index-file',
-            action='store',
-            type=str,
-            default=None,
-            help='Filename pattern to generate index.html from')
     parser.add_argument(
             '-l',
             '--language',
@@ -49,6 +39,13 @@ def main():
             type=str,
             default=None,
             help='Force the language for the given files')
+    parser.add_argument(
+            '-r',
+            '--root-link',
+            action='store',
+            type=str,
+            default=None,
+            help='Path to prepend to all links, must have a trailing "/"')
     parser.add_argument('src',
             action='store',
             type=str,
@@ -65,6 +62,7 @@ def main():
     # `None` is a special value for directory that forces output to STDOUT
     settings = {
         'directory': None,
+        'root_link': '/',
         'template': 'tmp_basic',
         'formatter': 'fmt_markdown',
         'highlighter': 'hlt_pygments',
@@ -99,7 +97,7 @@ def main():
     # Tell utils.destination which dir to treat as output root
     utils.DESTROOT = os.path.dirname(os.path.commonprefix(settings['src']))
 
-    template.preprocess([utils.destination(x, settings['directory']) for x in settings['src']])
+    template.preprocess([utils.destination(x, settings['directory']) for x in settings['src']], settings['root_link'])
     for src in settings['src']:
         Source(src).generate_docs(template, formatter, highlighter, settings['directory'])
 
