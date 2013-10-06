@@ -5,10 +5,10 @@ Provides a class for handling source files. The primary goal is to create a
 generator yielding (docs, code) tuples from a source file.
 """
 import logging
-import pycclone
 import re
 import os
 import utils
+import languages
 
 log = logging.getLogger(__name__)
 
@@ -42,25 +42,20 @@ class Source(object):
         Detects language from extension or argument.
         """
         log.info('Detecting language for %s', self.fname)
-        
-        if language:                            # from argument
+
+        if language:
             self.lang = language
-        
-        ext = os.path.splitext(self.fname)[1]   # from extension
-        if ext in pycclone.LANG:
-            self.lang = pycclone.LANG[ext]
 
-        if self.lang:                           # Compile multiline match for
-            if 'multistart' in self.lang:       # read_to_multiend
-                ms = self.lang['multistart']
-                me = self.lang['multiend']
-                self.ms = ms.decode('string_escape')
-                self.me = me.decode('string_escape')
-                self.multi_re = re.compile('%s.*?%s' % (me, ms))
-            log.debug('Detected %s for %s', self.lang['name'], self.fname)
-            return self.lang['name']
+        else:
+            ext = os.path.splitext(self.fname)[1]
+            self.lang = languages.get_by_ext(ext)
 
-        raise ValueError("Cannot determine language for %s" % self.fname)
+        ms = self.lang['multistart']
+        me = self.lang['multiend']
+        self.ms = ms.decode('string_escape')
+        self.me = me.decode('string_escape')
+        self.multi_re = re.compile('%s.*?%s' % (me, ms))
+        log.debug('Detected %s for %s', self.lang['name'], self.fname)
 
     def read_multiline(self, line, f, indent):
         """
@@ -71,22 +66,21 @@ class Source(object):
         """
         log.debug('Beginning multiline search at position %d in %s', f.tell(), self.fname)
         result = ''
-        depth = 0
-        
+
         n = line.find(self.ms)
         if n >= 0:
-            line = line[n+len(self.ms):]
+            line = line[n + len(self.ms):]
 
         while line:
             if self.me in self.multi_re.sub('', line):
-                result += ''.join(line[indent:].rsplit(self.me,1))
+                result += ''.join(line[indent:].rsplit(self.me, 1))
                 break
-            
+
             result += line[indent:]
             line = f.readline()
         else:
             raise ParseError('Unexpected EOF while parsing %s.' % self.fname)
-        
+
         return result
 
     # === Access Methods ===
@@ -126,7 +120,7 @@ class Source(object):
                 # documentation
                 line_docs = line_strip.startswith(self.lang['symbol'])
                 line_multi = line_strip.startswith(self.ms)
-                
+
                 # If we are starting a new section, yield previous section
                 if not in_docs and (line_docs or line_multi) and (docs or code):
                     yield (docs, code)
@@ -138,7 +132,7 @@ class Source(object):
                     in_docs = True
                     indent = len(indent_re.match(line).group())
                     docs += self.read_multiline(line, f, indent)
-                
+
                 elif line_docs:
                     # Starting a single line comment
                     in_docs = True
@@ -155,11 +149,11 @@ class Source(object):
                     # Code block
                     in_docs = False
                     code += buff + line
-                
+
                 # reset loop
                 buff = ''
                 line = f.readline()
-           
+
             # Final yield
             yield (docs, code)
 
@@ -174,7 +168,7 @@ class Source(object):
         Generates and writes the documentation for the source file.
         """
         log.info('Generating docs for %s', self.fname)
-        
+
         with utils.file_or_stdout(self.fname, outdir, template.ext) as f:
             for line in template.generate_docs(self.format_sections(formatter, highlighter)):
                 f.write(line)
