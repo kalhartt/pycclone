@@ -1,0 +1,8 @@
+{ "test_language": {
+    "name": "test_language",
+    "extension": ".test",
+    "symbol": "!?",
+    "multistart": "!!",
+    "multiend": "!!"
+    }
+}
