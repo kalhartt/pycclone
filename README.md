@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kalhartt/pycclone.png?branch=master)](https://travis-ci.org/kalhartt/pycclone)
+
 pycclone
 ========
 
