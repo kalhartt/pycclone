@@ -56,3 +56,31 @@ class open_static(object):
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.fhandle.close()
+
+
+def copy_static(plugin, fname, outdir):
+    """
+    Copies file `fname` from plugin directory to output directory root.
+
+    This assumes fname points to a file, not a directory. Relative directory
+    structure is preserved.
+
+    ### arguments
+    plugin
+    :   Reference to the plugin whose static files are being copied. In
+        practice this is usually `self`.
+
+    fname
+    :   Name of the file to copy
+
+    outdir
+    :   Output directory path
+
+    ### returns
+    `None`
+    """
+    ext = os.path.splitext(fname)[1]
+    out_name = destination(fname, outdir) + ext
+    with open_static(plugin, fname) as f_in:
+        with open(out_name, 'w') as f_out:
+            f_out.writelines(line for line in f_in)

@@ -45,3 +45,8 @@ def test_split_path():
 def test_open_static():
     # TODO
     pass
+
+
+def test_copy_static():
+    # TODO
+    pass
