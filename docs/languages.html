@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="stylesheet" href="/pycclone/docs/pygments.css">
+    
+        <link rel="stylesheet" href="/pycclone/docs/style.css">
+    
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css">
+    
+    <title>Documentation</title>
+    </head>
+    <nav class="navbar navbar-default navbar-fixed-top" role=navigation>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="docs">Documentation</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">docs<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/__init__.html">__init__</a></li>
+                        
+                            <li><a href="/pycclone/docs/languages.html">languages</a></li>
+                        
+                            <li><a href="/pycclone/docs/main.html">main</a></li>
+                        
+                            <li><a href="/pycclone/docs/source.html">source</a></li>
+                        
+                            <li><a href="/pycclone/docs/utils.html">utils</a></li>
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/formatters/base_formatter.html">base_formatter</a></li>
+                        
+                            <li><a href="/pycclone/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
+                        
+                            <li><a href="/pycclone/docs/formatters/__init__.html">__init__</a></li>
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/highlighters/base_highlighter.html">base_highlighter</a></li>
+                        
+                            <li><a href="/pycclone/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
+                        
+                            <li><a href="/pycclone/docs/highlighters/__init__.html">__init__</a></li>
+                        
+                    </ul>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">templates<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/templates/base_template.html">base_template</a></li>
+                        
+                            <li><a href="/pycclone/docs/templates/__init__.html">__init__</a></li>
+                        
+                            <li><a href="/pycclone/docs/templates/tmp_basic.html">tmp_basic</a></li>
+                        
+                    </ul>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <body data-spy="scroll" data-target="#navbar">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-5"><h1 id="pycclonelanguages">pycclone.languages</h1>
+<p>Languages are stored in json files under <code>USERDIR/languages</code> with
+the following format:</p>
+<p><code>languages/&lt;name&gt;.json</code></p>
+<pre><code>{ &quot;&lt;name&gt;&quot;: {
+    &quot;name&quot;: &quot;&lt;name&gt;&quot;,
+    &quot;extension&quot;: &quot;&lt;extension&gt;&quot;,
+    &quot;symbol&quot;: &quot;&lt;single-line identifier&gt;&quot;,
+    &quot;multistart&quot;: &quot;&lt;multi-line begin identifier&gt;&quot;,
+    &quot;multiend&quot;: &quot;&lt;multi-line end identifier&gt;&quot;
+    }
+}
+</code></pre></div>
+            <div class="col-md-7"><div class="pygments"><pre><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span> <span class="kn">as</span> <span class="nn">pkg</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">pycclone</span> <span class="kn">import</span> <span class="n">USERDIR</span>
+
+<span class="n">_LANG</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Read packaged languages</p></div>
+            <div class="col-md-7"><div class="pygments"><pre><span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">resource_listdir</span><span class="p">(</span><span class="s">&#39;pycclone&#39;</span><span class="p">,</span> <span class="s">&#39;data/languages&#39;</span><span class="p">):</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="s">&#39;data/languages/&#39;</span> <span class="o">+</span> <span class="n">lang</span>
+    <span class="n">stream</span> <span class="o">=</span> <span class="n">pkg</span><span class="o">.</span><span class="n">resource_stream</span><span class="p">(</span><span class="s">&#39;pycclone&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+    <span class="n">_LANG</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Read locally installed languages</p></div>
+            <div class="col-md-7"><div class="pygments"><pre><span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">USERDIR</span><span class="p">,</span> <span class="s">&#39;languages&#39;</span><span class="p">,</span> <span class="s">&#39;*.json&#39;</span><span class="p">)):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">lang</span><span class="p">,</span> <span class="s">&#39;rU&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">_LANG</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
+
+
+<span class="k">def</span> <span class="nf">get_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>rns the language with a given name.</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_LANG</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_LANG</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot determine language for </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_by_ext</span><span class="p">(</span><span class="n">ext</span><span class="p">):</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>rns the language with a given extension.</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_LANG</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;extension&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ext</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">v</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot determine language for </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">ext</span><span class="p">)</span>
+</pre></div>
+</div>
+        </div>
+        
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    </body>
+</html>

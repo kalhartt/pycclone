@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-        <link rel="stylesheet" href="/pycclone/pygments.css">
+        <link rel="stylesheet" href="/pycclone/docs/pygments.css">
     
-        <link rel="stylesheet" href="/pycclone/style.css">
+        <link rel="stylesheet" href="/pycclone/docs/style.css">
     
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css">
     
@@ -31,6 +31,8 @@
                         
                             <li><a href="/pycclone/docs/__init__.html">__init__</a></li>
                         
+                            <li><a href="/pycclone/docs/languages.html">languages</a></li>
+                        
                             <li><a href="/pycclone/docs/main.html">main</a></li>
                         
                             <li><a href="/pycclone/docs/source.html">source</a></li>
@@ -44,6 +46,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
+                            <li><a href="/pycclone/docs/formatters/base_formatter.html">base_formatter</a></li>
+                        
                             <li><a href="/pycclone/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
                         
                             <li><a href="/pycclone/docs/formatters/__init__.html">__init__</a></li>
@@ -54,6 +58,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/highlighters/base_highlighter.html">base_highlighter</a></li>
                         
                             <li><a href="/pycclone/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
                         
@@ -85,10 +91,7 @@
         <div class="row">
             <div class="col-md-5"><h2 id="pycclone">pycclone</h2>
 <p>A simple extensible documentation generator</p></div>
-            <div class="col-md-7"><div class="pygments"><pre><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">pkg_resources</span>
+            <div class="col-md-7"><div class="pygments"><pre><span class="kn">import</span> <span class="nn">os</span>
 </pre></div>
 </div>
         </div>
@@ -133,45 +136,6 @@
     <span class="n">USERDIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;APPDATA&#39;</span><span class="p">],</span> <span class="s">&#39;.pycclone&#39;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">USERDIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;HOME&#39;</span><span class="p">],</span> <span class="s">&#39;.pycclone&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-5"><p>=== Language Definitions ===
- Languages are stored in json files under <code>USERDIR/languages</code> with
- the following format:
- <code>languages/python.json</code>
- <code>{ ".py": {
-     "name": "python",
-     "symbol": "#",
-     "multistart": "\"\"\"",
-     "multiend": "\"\"\"",
-     }
- }
- There is currently no support for multiple multi-line delimiters.
- For example, using `'''` for multiline comments instead of `"""`
- in python is not supported.</code></p></div>
-            <div class="col-md-7"><div class="pygments"><pre><span class="n">LANG</span> <span class="o">=</span> <span class="p">{}</span>
-</pre></div>
-</div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-5"><p>Read packaged languages</p></div>
-            <div class="col-md-7"><div class="pygments"><pre><span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_listdir</span><span class="p">(</span><span class="s">&#39;pycclone&#39;</span><span class="p">,</span> <span class="s">&#39;data/languages&#39;</span><span class="p">):</span>
-    <span class="n">fname</span> <span class="o">=</span> <span class="s">&#39;data/languages/&#39;</span> <span class="o">+</span> <span class="n">lang</span>
-    <span class="n">stream</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_stream</span><span class="p">(</span><span class="s">&#39;pycclone&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
-    <span class="n">LANG</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
-</pre></div>
-</div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-5"><p>Read locally installed languages</p></div>
-            <div class="col-md-7"><div class="pygments"><pre><span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">USERDIR</span><span class="p">,</span> <span class="s">&#39;languages&#39;</span><span class="p">,</span> <span class="s">&#39;*.json&#39;</span><span class="p">)):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">lang</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">LANG</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
 </pre></div>
 </div>
         </div>

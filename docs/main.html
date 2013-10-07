@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-        <link rel="stylesheet" href="/pycclone/pygments.css">
+        <link rel="stylesheet" href="/pycclone/docs/pygments.css">
     
-        <link rel="stylesheet" href="/pycclone/style.css">
+        <link rel="stylesheet" href="/pycclone/docs/style.css">
     
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css">
     
@@ -31,6 +31,8 @@
                         
                             <li><a href="/pycclone/docs/__init__.html">__init__</a></li>
                         
+                            <li><a href="/pycclone/docs/languages.html">languages</a></li>
+                        
                             <li><a href="/pycclone/docs/main.html">main</a></li>
                         
                             <li><a href="/pycclone/docs/source.html">source</a></li>
@@ -44,6 +46,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
+                            <li><a href="/pycclone/docs/formatters/base_formatter.html">base_formatter</a></li>
+                        
                             <li><a href="/pycclone/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
                         
                             <li><a href="/pycclone/docs/formatters/__init__.html">__init__</a></li>
@@ -54,6 +58,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/highlighters/base_highlighter.html">base_highlighter</a></li>
                         
                             <li><a href="/pycclone/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
                         
@@ -89,13 +95,13 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">pycclone</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">pycclone</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="kn">from</span> <span class="nn">pycclone.templates</span> <span class="kn">import</span> <span class="n">get_template</span>
 <span class="kn">from</span> <span class="nn">pycclone.highlighters</span> <span class="kn">import</span> <span class="n">get_highlighter</span>
 <span class="kn">from</span> <span class="nn">pycclone.formatters</span> <span class="kn">import</span> <span class="n">get_formatter</span>
-<span class="kn">from</span> <span class="nn">.source</span> <span class="kn">import</span> <span class="n">Source</span>
+<span class="kn">from</span> <span class="nn">pycclone.source</span> <span class="kn">import</span> <span class="n">Source</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 </pre></div>
@@ -106,7 +112,6 @@
             <div class="col-md-5"><p>The command-line entry point</p></div>
             <div class="col-md-7"><div class="pygments"><pre><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Parsing commandline arguments&#39;</span><span class="p">)</span>
-    
 </pre></div>
 </div>
         </div>
@@ -114,41 +119,43 @@
         <div class="row">
             <div class="col-md-5"><h2 id="commandline-arguments">Commandline Arguments</h2></div>
             <div class="col-md-7"><div class="pygments"><pre>    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-            <span class="n">description</span><span class="o">=</span><span class="s">&#39;Generate documentation from sourcecode&#39;</span><span class="p">)</span>
+        <span class="n">description</span><span class="o">=</span><span class="s">&#39;Generate documentation from sourcecode&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s">&#39;-d&#39;</span><span class="p">,</span>
-            <span class="s">&#39;--directory&#39;</span><span class="p">,</span>
-            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Output directory, writes to stdout if unspecified&#39;</span><span class="p">)</span>
+        <span class="s">&#39;-d&#39;</span><span class="p">,</span>
+        <span class="s">&#39;--directory&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Output directory, writes to stdout if unspecified&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s">&#39;-l&#39;</span><span class="p">,</span>
-            <span class="s">&#39;--language&#39;</span><span class="p">,</span>
-            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Force the language for the given files&#39;</span><span class="p">)</span>
+        <span class="s">&#39;-l&#39;</span><span class="p">,</span>
+        <span class="s">&#39;--language&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Force the language for the given files&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s">&#39;-r&#39;</span><span class="p">,</span>
-            <span class="s">&#39;--root-link&#39;</span><span class="p">,</span>
-            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Path to prepend to all links, must have a trailing &quot;/&quot;&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;src&#39;</span><span class="p">,</span>
-            <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-            <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-            <span class="n">help</span><span class="o">=</span><span class="s">&#39;Files to generate documentation for&#39;</span><span class="p">)</span>
+        <span class="s">&#39;-r&#39;</span><span class="p">,</span>
+        <span class="s">&#39;--root-link&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Path to prepend to all links, must have a trailing &quot;/&quot;&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s">&#39;src&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s">&#39;store&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Files to generate documentation for&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
         </div>
         
         <div class="row">
             <div class="col-md-5"><p>Filter out arguments that weren't actually passed on the commandline</p></div>
-            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Parsed args: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -170,7 +177,7 @@
             <span class="s">&#39;lexer&#39;</span><span class="p">:</span> <span class="p">{},</span>
             <span class="s">&#39;formatter&#39;</span><span class="p">:</span> <span class="p">{}</span>
         <span class="p">},</span>
-   <span class="p">}</span>
+    <span class="p">}</span>
 </pre></div>
 </div>
         </div>
@@ -183,16 +190,18 @@
             <span class="n">settings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
     <span class="n">settings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Parsed settings: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
-    
 </pre></div>
 </div>
         </div>
         
         <div class="row">
             <div class="col-md-5"><p>Get the modules requested.</p></div>
-            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;template&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;template_args&#39;</span><span class="p">])</span>
-    <span class="n">formatter</span> <span class="o">=</span> <span class="n">get_formatter</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;formatter&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;formatter_args&#39;</span><span class="p">])</span>
-    <span class="n">highlighter</span> <span class="o">=</span> <span class="n">get_highlighter</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;highlighter&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">Highlighter</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;highlighter_args&#39;</span><span class="p">])</span>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;template&#39;</span><span class="p">])</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;template_args&#39;</span><span class="p">])</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">get_formatter</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;formatter&#39;</span><span class="p">])</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;formatter_args&#39;</span><span class="p">])</span>
+    <span class="n">highlighter</span> <span class="o">=</span> <span class="n">get_highlighter</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;highlighter&#39;</span><span class="p">])</span>
+    <span class="n">highlighter</span> <span class="o">=</span> <span class="n">highlighter</span><span class="o">.</span><span class="n">Highlighter</span><span class="p">(</span><span class="o">**</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;highlighter_args&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
         </div>
@@ -209,12 +218,23 @@
         </div>
         
         <div class="row">
-            <div class="col-md-5"><p>Tell utils.destination which dir to treat as output root</p></div>
-            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">utils</span><span class="o">.</span><span class="n">DESTROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">commonprefix</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]))</span>
+            <div class="col-md-5"><p>Tell utils.destination which dir to treat as input root</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">utils</span><span class="o">.</span><span class="n">ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">commonprefix</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]))</span>
+    <span class="n">destination</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">utils</span><span class="o">.</span><span class="n">destination</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span>
+    <span class="n">outfiles</span> <span class="o">=</span> <span class="p">[</span><span class="n">destination</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]]</span>
 
-    <span class="n">template</span><span class="o">.</span><span class="n">preprocess</span><span class="p">([</span><span class="n">utils</span><span class="o">.</span><span class="n">destination</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]],</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;root_link&#39;</span><span class="p">])</span>
+    <span class="n">template</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">outfiles</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;root_link&#39;</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">src</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]:</span>
-        <span class="n">Source</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">highlighter</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">Source</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span>
+            <span class="n">template</span><span class="p">,</span>
+            <span class="n">formatter</span><span class="p">,</span>
+            <span class="n">highlighter</span><span class="p">,</span>
+            <span class="n">settings</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">src</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>

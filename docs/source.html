@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-        <link rel="stylesheet" href="/pycclone/pygments.css">
+        <link rel="stylesheet" href="/pycclone/docs/pygments.css">
     
-        <link rel="stylesheet" href="/pycclone/style.css">
+        <link rel="stylesheet" href="/pycclone/docs/style.css">
     
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css">
     
@@ -31,6 +31,8 @@
                         
                             <li><a href="/pycclone/docs/__init__.html">__init__</a></li>
                         
+                            <li><a href="/pycclone/docs/languages.html">languages</a></li>
+                        
                             <li><a href="/pycclone/docs/main.html">main</a></li>
                         
                             <li><a href="/pycclone/docs/source.html">source</a></li>
@@ -44,6 +46,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
+                            <li><a href="/pycclone/docs/formatters/base_formatter.html">base_formatter</a></li>
+                        
                             <li><a href="/pycclone/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
                         
                             <li><a href="/pycclone/docs/formatters/__init__.html">__init__</a></li>
@@ -54,6 +58,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/highlighters/base_highlighter.html">base_highlighter</a></li>
                         
                             <li><a href="/pycclone/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
                         
@@ -87,10 +93,15 @@
 <p>Provides a class for handling source files. The primary goal is to create a
 generator yielding (docs, code) tuples from a source file.</p></div>
             <div class="col-md-7"><div class="pygments"><pre><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">pycclone</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">utils</span>
+<span class="kn">import</span> <span class="nn">pycclone.utils</span> <span class="kn">as</span> <span class="nn">utils</span>
+<span class="kn">import</span> <span class="nn">pycclone.languages</span> <span class="kn">as</span> <span class="nn">languages</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 
@@ -138,25 +149,18 @@ source file.</p></div>
         <div class="row">
             <div class="col-md-5"><p>Detects language from extension or argument.</p></div>
             <div class="col-md-7"><div class="pygments"><pre>        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Detecting language for </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
-        
-        <span class="k">if</span> <span class="n">language</span><span class="p">:</span>                            <span class="c"># from argument</span>
+
+        <span class="k">if</span> <span class="n">language</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="n">language</span>
-        
-        <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>   <span class="c"># from extension</span>
-        <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">pycclone</span><span class="o">.</span><span class="n">LANG</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="n">pycclone</span><span class="o">.</span><span class="n">LANG</span><span class="p">[</span><span class="n">ext</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">:</span>                           <span class="c"># Compile multiline match for</span>
-            <span class="k">if</span> <span class="s">&#39;multistart&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">:</span>       <span class="c"># read_to_multiend</span>
-                <span class="n">ms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">[</span><span class="s">&#39;multistart&#39;</span><span class="p">]</span>
-                <span class="n">me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">[</span><span class="s">&#39;multiend&#39;</span><span class="p">]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ms</span> <span class="o">=</span> <span class="n">ms</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;string_escape&#39;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">me</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;string_escape&#39;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">multi_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">.*?</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">ms</span><span class="p">))</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Detected </span><span class="si">%s</span><span class="s"> for </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="n">languages</span><span class="o">.</span><span class="n">get_by_ext</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
 
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot determine language for </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">[</span><span class="s">&#39;multistart&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">[</span><span class="s">&#39;multiend&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multi_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">.*?</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">me</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ms</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Detected </span><span class="si">%s</span><span class="s"> for </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">read_multiline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="p">):</span>
 </pre></div>
@@ -169,22 +173,21 @@ It may return multiple multiline sections as one if a new
 multiline section begins on the same line that one ends.</p></div>
             <div class="col-md-7"><div class="pygments"><pre>        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Beginning multiline search at position </span><span class="si">%d</span><span class="s"> in </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
-        
+
         <span class="n">n</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ms</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ms</span><span class="p">):]</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ms</span><span class="p">):]</span>
 
         <span class="k">while</span> <span class="n">line</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">me</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">multi_re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
-                <span class="n">result</span> <span class="o">+=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">indent</span><span class="p">:]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">me</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">indent</span><span class="p">:]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">me</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
                 <span class="k">break</span>
-            
+
             <span class="n">result</span> <span class="o">+=</span> <span class="n">line</span><span class="p">[</span><span class="n">indent</span><span class="p">:]</span>
             <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ParseError</span><span class="p">(</span><span class="s">&#39;Unexpected EOF while parsing </span><span class="si">%s</span><span class="s">.&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
-        
+
         <span class="k">return</span> <span class="n">result</span>
 </pre></div>
 </div>
@@ -240,7 +243,6 @@ This algorithm will never support Whitespace...</p></div>
  documentation</p></div>
             <div class="col-md-7"><div class="pygments"><pre>                <span class="n">line_docs</span> <span class="o">=</span> <span class="n">line_strip</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lang</span><span class="p">[</span><span class="s">&#39;symbol&#39;</span><span class="p">])</span>
                 <span class="n">line_multi</span> <span class="o">=</span> <span class="n">line_strip</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ms</span><span class="p">)</span>
-                
 </pre></div>
 </div>
         </div>
@@ -262,7 +264,7 @@ This algorithm will never support Whitespace...</p></div>
             <div class="col-md-7"><div class="pygments"><pre>                    <span class="n">in_docs</span> <span class="o">=</span> <span class="bp">True</span>
                     <span class="n">indent</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">indent_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
                     <span class="n">docs</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_multiline</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="p">)</span>
-                
+
                 <span class="k">elif</span> <span class="n">line_docs</span><span class="p">:</span>
 </pre></div>
 </div>
@@ -294,7 +296,6 @@ This algorithm will never support Whitespace...</p></div>
             <div class="col-md-5"><p>Code block</p></div>
             <div class="col-md-7"><div class="pygments"><pre>                    <span class="n">in_docs</span> <span class="o">=</span> <span class="bp">False</span>
                     <span class="n">code</span> <span class="o">+=</span> <span class="n">buff</span> <span class="o">+</span> <span class="n">line</span>
-                
 </pre></div>
 </div>
         </div>
@@ -303,7 +304,6 @@ This algorithm will never support Whitespace...</p></div>
             <div class="col-md-5"><p>reset loop</p></div>
             <div class="col-md-7"><div class="pygments"><pre>                <span class="n">buff</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-           
 </pre></div>
 </div>
         </div>
@@ -327,14 +327,35 @@ This algorithm will never support Whitespace...</p></div>
         </div>
         
         <div class="row">
-            <div class="col-md-5"><p>Generates and writes the documentation for the source file.</p></div>
+            <div class="col-md-5"><p>Generates and writes the documentation for the source file.
+If outdir is false, this will return the generated document.
+Otherwise it returns None.</p></div>
             <div class="col-md-7"><div class="pygments"><pre>        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Generating docs for </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
-        
-        <span class="k">with</span> <span class="n">utils</span><span class="o">.</span><span class="n">file_or_stdout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="n">outdir</span><span class="p">,</span> <span class="n">template</span><span class="o">.</span><span class="n">ext</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">outdir</span><span class="p">:</span>
+                <span class="n">outname</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">destination</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="n">outdir</span><span class="p">)</span> <span class="o">+</span> <span class="n">template</span><span class="o">.</span><span class="n">ext</span>
+                <span class="n">destdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">outname</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">destdir</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">destdir</span><span class="p">)</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outname</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">template</span><span class="o">.</span><span class="n">generate_docs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_sections</span><span class="p">(</span><span class="n">formatter</span><span class="p">,</span> <span class="n">highlighter</span><span class="p">)):</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
-        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Documentation written for </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Documentation written for </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">outdir</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">result</span>
 </pre></div>
 </div>
         </div>

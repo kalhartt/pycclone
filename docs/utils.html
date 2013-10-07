@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-        <link rel="stylesheet" href="/pycclone/pygments.css">
+        <link rel="stylesheet" href="/pycclone/docs/pygments.css">
     
-        <link rel="stylesheet" href="/pycclone/style.css">
+        <link rel="stylesheet" href="/pycclone/docs/style.css">
     
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css">
     
@@ -31,6 +31,8 @@
                         
                             <li><a href="/pycclone/docs/__init__.html">__init__</a></li>
                         
+                            <li><a href="/pycclone/docs/languages.html">languages</a></li>
+                        
                             <li><a href="/pycclone/docs/main.html">main</a></li>
                         
                             <li><a href="/pycclone/docs/source.html">source</a></li>
@@ -44,6 +46,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
+                            <li><a href="/pycclone/docs/formatters/base_formatter.html">base_formatter</a></li>
+                        
                             <li><a href="/pycclone/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
                         
                             <li><a href="/pycclone/docs/formatters/__init__.html">__init__</a></li>
@@ -54,6 +58,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/highlighters/base_highlighter.html">base_highlighter</a></li>
                         
                             <li><a href="/pycclone/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
                         
@@ -86,11 +92,10 @@
             <div class="col-md-5"><h2 id="pyccloneutils">pycclone.utils</h2>
 <p>Utility functions</p></div>
             <div class="col-md-7"><div class="pygments"><pre><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">StringIO</span>
 
-<span class="n">DESTROOT</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">curdir</span>
+
 
 <span class="k">def</span> <span class="nf">destination</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">outdir</span><span class="p">):</span>
 </pre></div>
@@ -102,9 +107,12 @@
 source file.</p></div>
             <div class="col-md-7"><div class="pygments"><pre>    <span class="k">if</span> <span class="ow">not</span> <span class="n">outdir</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">fname</span>
-    
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">DESTROOT</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+    <span class="n">basename</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">ROOT</span><span class="p">))</span>
+    <span class="n">filename</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">outname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="n">basename</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outname</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">split_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 </pre></div>
@@ -118,37 +126,6 @@ source file.</p></div>
         <span class="n">split</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">+</span> <span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
     <span class="k">return</span> <span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
-<span class="k">class</span> <span class="nc">file_or_stdout</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-</pre></div>
-</div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-5"><p>Context manager returning either a file handle
-or a StringIO instance.</p></div>
-            <div class="col-md-7"><div class="pygments"><pre>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">outdir</span><span class="p">,</span> <span class="n">ext</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">outdir</span> <span class="o">=</span> <span class="n">outdir</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span>
-
-    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">outdir</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fhandle</span> <span class="o">=</span> <span class="n">StringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">outname</span> <span class="o">=</span> <span class="n">destination</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outdir</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext</span>
-            <span class="n">outdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">outname</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">outdir</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">outdir</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fhandle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outname</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fhandle</span>
-
-    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">outdir</span><span class="p">:</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fhandle</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fhandle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="k">class</span> <span class="nc">open_static</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </pre></div>
@@ -176,6 +153,32 @@ this method and use pkg_resources.</p></div>
 
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fhandle</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">copy_static</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">outdir</span><span class="p">):</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Copies file <code>fname</code> from plugin directory to output directory root.
+This assumes fname points to a file, not a directory. Relative directory
+structure is preserved.</p>
+<h3 id="arguments">arguments</h3>
+<p>plugin
+:   Reference to the plugin whose static files are being copied. In
+    practice this is usually <code>self</code>.
+fname
+:   Name of the file to copy
+outdir
+:   Output directory path</p>
+<h3 id="returns">returns</h3>
+<p><code>None</code></p></div>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">out_name</span> <span class="o">=</span> <span class="n">destination</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">outdir</span><span class="p">)</span> <span class="o">+</span> <span class="n">ext</span>
+    <span class="k">with</span> <span class="n">open_static</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_in</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_out</span><span class="p">:</span>
+            <span class="n">f_out</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f_in</span><span class="p">)</span>
 </pre></div>
 </div>
         </div>

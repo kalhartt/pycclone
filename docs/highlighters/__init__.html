@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-        <link rel="stylesheet" href="/pycclone/pygments.css">
+        <link rel="stylesheet" href="/pycclone/docs/pygments.css">
     
-        <link rel="stylesheet" href="/pycclone/style.css">
+        <link rel="stylesheet" href="/pycclone/docs/style.css">
     
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css">
     
@@ -31,6 +31,8 @@
                         
                             <li><a href="/pycclone/docs/__init__.html">__init__</a></li>
                         
+                            <li><a href="/pycclone/docs/languages.html">languages</a></li>
+                        
                             <li><a href="/pycclone/docs/main.html">main</a></li>
                         
                             <li><a href="/pycclone/docs/source.html">source</a></li>
@@ -44,6 +46,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
+                            <li><a href="/pycclone/docs/formatters/base_formatter.html">base_formatter</a></li>
+                        
                             <li><a href="/pycclone/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
                         
                             <li><a href="/pycclone/docs/formatters/__init__.html">__init__</a></li>
@@ -54,6 +58,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/highlighters/base_highlighter.html">base_highlighter</a></li>
                         
                             <li><a href="/pycclone/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
                         
@@ -88,6 +94,13 @@
 <span class="kn">from</span> <span class="nn">imp</span> <span class="kn">import</span> <span class="n">load_source</span>
 <span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
 <span class="kn">from</span> <span class="nn">pycclone</span> <span class="kn">import</span> <span class="n">USERDIR</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Make BaseHighlighter available at module level</p></div>
+            <div class="col-md-7"><div class="pygments"><pre><span class="kn">from</span> <span class="nn">pycclone.highlighters.base_highlighter</span> <span class="kn">import</span> <span class="n">BaseHighlighter</span>
 </pre></div>
 </div>
         </div>

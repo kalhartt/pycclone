@@ -89,16 +89,20 @@
     <div class="container">
         
         <div class="row">
-            <div class="col-md-5"><h2 id="pyccloneformattersmarkdown">pycclone.formatters.markdown</h2>
-<p>Markdown document formatting</p></div>
-            <div class="col-md-7"><div class="pygments"><pre><span class="kn">from</span> <span class="nn">markdown</span> <span class="kn">import</span> <span class="n">markdown</span>
-<span class="kn">from</span> <span class="nn">pycclone.formatters</span> <span class="kn">import</span> <span class="n">BaseFormatter</span>
-
-
-<span class="k">class</span> <span class="nc">Formatter</span><span class="p">(</span><span class="n">BaseFormatter</span><span class="p">):</span>
+            <div class="col-md-5"><h2 id="pyccloneformattersbase_formatter">pycclone.formatters.base_formatter</h2>
+<p>Base Formatter class.</p></div>
+            <div class="col-md-7"><div class="pygments"><pre><span class="k">class</span> <span class="nc">BaseFormatter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">kwargs</span>
+</pre></div>
+</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-5"><p>Setup the formatter
+kwargs is the dictionary <code>format_args</code> defined in <code>pycclone.json</code>
+settings.</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>        <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">docs</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
 </pre></div>
@@ -106,10 +110,8 @@
         </div>
         
         <div class="row">
-            <div class="col-md-5"><p>Formats a document section using markdown.
-kwargs is the dictionary <code>format_args</code> defined in <code>pycclone.json</code>
-settings.</p></div>
-            <div class="col-md-7"><div class="pygments"><pre>        <span class="k">return</span> <span class="n">markdown</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+            <div class="col-md-5"><p>Formats a document section.</p></div>
+            <div class="col-md-7"><div class="pygments"><pre>        <span class="k">return</span> <span class="n">docs</span>
 </pre></div>
 </div>
         </div>

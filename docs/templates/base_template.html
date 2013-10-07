@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-        <link rel="stylesheet" href="/pycclone/pygments.css">
+        <link rel="stylesheet" href="/pycclone/docs/pygments.css">
     
-        <link rel="stylesheet" href="/pycclone/style.css">
+        <link rel="stylesheet" href="/pycclone/docs/style.css">
     
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css">
     
@@ -31,6 +31,8 @@
                         
                             <li><a href="/pycclone/docs/__init__.html">__init__</a></li>
                         
+                            <li><a href="/pycclone/docs/languages.html">languages</a></li>
+                        
                             <li><a href="/pycclone/docs/main.html">main</a></li>
                         
                             <li><a href="/pycclone/docs/source.html">source</a></li>
@@ -44,6 +46,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">formatters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
+                            <li><a href="/pycclone/docs/formatters/base_formatter.html">base_formatter</a></li>
+                        
                             <li><a href="/pycclone/docs/formatters/fmt_markdown.html">fmt_markdown</a></li>
                         
                             <li><a href="/pycclone/docs/formatters/__init__.html">__init__</a></li>
@@ -54,6 +58,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">highlighters<b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                        
+                            <li><a href="/pycclone/docs/highlighters/base_highlighter.html">base_highlighter</a></li>
                         
                             <li><a href="/pycclone/docs/highlighters/hlt_pygments.html">hlt_pygments</a></li>
                         
@@ -83,14 +89,8 @@
     <div class="container">
         
         <div class="row">
-            <div class="col-md-5"><h2 id="pycclonetemplatesbase_template">pycclone.templates.base_template</h2></div>
-            <div class="col-md-7"><div class="pygments"><pre><span class="kn">import</span> <span class="nn">os</span>
-</pre></div>
-</div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-5"><p>=== Base Template ===</p></div>
+            <div class="col-md-5"><h2 id="pycclonetemplatesbase_template">pycclone.templates.base_template</h2>
+<p>=== Base Template ===</p></div>
             <div class="col-md-7"><div class="pygments"><pre><span class="k">class</span> <span class="nc">BaseTemplate</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 </pre></div>
 </div>
@@ -132,7 +132,7 @@ copy_static will not be called if writing to stdout.</p></div>
         
         <div class="row">
             <div class="col-md-5"><p>=== Output Generating Methods ===</p></div>
-            <div class="col-md-7"><div class="pygments"><pre>    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sources</span><span class="p">):</span>
+            <div class="col-md-7"><div class="pygments"><pre>    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sources</span><span class="p">,</span> <span class="n">root_link</span><span class="p">):</span>
 </pre></div>
 </div>
         </div>
@@ -145,19 +145,19 @@ and navigation. If multiple projects are being processed, preprocess
 will be called before beginning each project.</p></div>
             <div class="col-md-7"><div class="pygments"><pre>        <span class="k">pass</span>
 
-    
     <span class="k">def</span> <span class="nf">generate_docs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sections</span><span class="p">):</span>
 </pre></div>
 </div>
         </div>
         
         <div class="row">
-            <div class="col-md-5"><p>Generates the document.</p>
-<p>The argument sections is a generator yielding <code>(docs, code)</code> tuples.
+            <div class="col-md-5"><p>Generates the document.
+The argument sections is a generator yielding <code>(docs, code)</code> tuples.
 This <strong>must</strong> be a generator yielding strings to write to the out.
 If you insist on manipulating the whole file in memory, then just
 use yield instead of return at the end.</p></div>
-            <div class="col-md-7"><div class="pygments"><pre>        <span class="k">pass</span>
+            <div class="col-md-7"><div class="pygments"><pre>        <span class="k">for</span> <span class="n">docs</span><span class="p">,</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">docs</span> <span class="o">+</span> <span class="n">code</span>
 </pre></div>
 </div>
         </div>
