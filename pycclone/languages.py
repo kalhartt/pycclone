@@ -28,7 +28,7 @@ _LANG = {}
 for lang in pkg.resource_listdir('pycclone', 'data/languages'):
     fname = 'data/languages/' + lang
     stream = pkg.resource_stream('pycclone', fname)
-    _LANG.update(json.loads(stream.read()))
+    _LANG.update(json.loads(stream.read().decode('utf-8')))
 
 # Read locally installed languages
 for lang in glob(os.path.join(USERDIR, 'languages', '*.json')):
