@@ -8,12 +8,13 @@ import argparse
 import logging
 import json
 import pycclone
+import sys
 import os
 from pycclone import utils
 from pycclone.templates import get_template
 from pycclone.highlighters import get_highlighter
 from pycclone.formatters import get_formatter
-from .source import Source
+from pycclone.source import Source
 
 log = logging.getLogger(__name__)
 
@@ -99,18 +100,23 @@ def main():
         template.copy_static(settings['directory'])
         highlighter.copy_static(settings['directory'])
 
-    # Tell utils.destination which dir to treat as output root
-    utils.DESTROOT = os.path.dirname(os.path.commonprefix(settings['src']))
+    # Tell utils.destination which dir to treat as input root
+    utils.ROOT = os.path.dirname(os.path.commonprefix(settings['src']))
     destination = lambda x: utils.destination(x, settings['directory'])
     outfiles = [destination(x) for x in settings['src']]
 
     template.preprocess(outfiles, settings['root_link'])
     for src in settings['src']:
-        Source(src).generate_docs(
+        result = Source(src).generate_docs(
             template,
             formatter,
             highlighter,
             settings['directory'])
+
+        if result:
+            sys.stdout.write('\n%s\n' % src)
+            sys.stdout.write(result)
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)

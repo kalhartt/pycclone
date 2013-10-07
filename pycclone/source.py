@@ -10,6 +10,11 @@ import os
 import pycclone.utils as utils
 import pycclone.languages as languages
 
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 log = logging.getLogger(__name__)
 
 
@@ -163,11 +168,33 @@ class Source(object):
     def generate_docs(self, template, formatter, highlighter, outdir):
         """
         Generates and writes the documentation for the source file.
+
+        If outdir is false, this will return the generated document.
+        Otherwise it returns None.
         """
         log.info('Generating docs for %s', self.fname)
 
-        with utils.file_or_stdout(self.fname, outdir, template.ext) as f:
+        try:
+            if outdir:
+                outname = utils.destination(self.fname, outdir) + template.ext
+                destdir = os.path.dirname(outname)
+                if not os.path.isdir(destdir):
+                    os.makedirs(destdir)
+                f = open(outname, 'w')
+            else:
+                f = StringIO()
+
             for line in template.generate_docs(self.format_sections(formatter, highlighter)):
                 f.write(line)
 
-        log.info('Documentation written for %s', self.fname)
+            log.info('Documentation written for %s', self.fname)
+
+            if not outdir:
+                result = f.getvalue()
+            else:
+                result = None
+
+        finally:
+            f.close()
+
+        return result
