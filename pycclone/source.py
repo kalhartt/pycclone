@@ -75,11 +75,14 @@ class Source(object):
             line = line[n + len(self.ms):]
 
         while line:
+            if line[:indent].isspace() and len(line) > indent:
+                line = line[indent:]
+
             if self.me in self.multi_re.sub('', line):
-                result += ''.join(line[indent:].rsplit(self.me, 1))
+                result += ''.join(line.rsplit(self.me, 1))
                 break
 
-            result += line[indent:]
+            result += line
             line = f.readline()
         else:
             raise ParseError('Unexpected EOF while parsing %s.' % self.fname)
