@@ -8,7 +8,7 @@ import logging
 import re
 import os
 import utils
-import languages
+import pycclone.languages as languages
 
 log = logging.getLogger(__name__)
 
@@ -84,7 +84,6 @@ class Source(object):
         return result
 
     # === Access Methods ===
-
 
     def read_sections(self):
         """

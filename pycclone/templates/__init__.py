@@ -10,7 +10,7 @@ from importlib import import_module
 from pycclone import USERDIR
 
 # Make the base template available at module level
-from base_template import BaseTemplate
+from pycclone.templates.base_template import BaseTemplate
 
 # === get_template(name) ===
 def get_template(name):
