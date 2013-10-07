@@ -7,7 +7,7 @@ generator yielding (docs, code) tuples from a source file.
 import logging
 import re
 import os
-import utils
+import pycclone.utils as utils
 import pycclone.languages as languages
 
 log = logging.getLogger(__name__)
@@ -50,11 +50,9 @@ class Source(object):
             ext = os.path.splitext(self.fname)[1]
             self.lang = languages.get_by_ext(ext)
 
-        ms = self.lang['multistart']
-        me = self.lang['multiend']
-        self.ms = ms.decode('string_escape')
-        self.me = me.decode('string_escape')
-        self.multi_re = re.compile('%s.*?%s' % (me, ms))
+        self.ms = self.lang['multistart']
+        self.me = self.lang['multiend']
+        self.multi_re = re.compile('%s.*?%s' % (self.me, self.ms))
         log.debug('Detected %s for %s', self.lang['name'], self.fname)
 
     def read_multiline(self, line, f, indent):

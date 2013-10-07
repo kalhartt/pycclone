@@ -2,7 +2,7 @@
 pycclone.templates.base_template
 --------------------------------
 """
-import os
+
 
 # === Base Template ===
 class BaseTemplate(object):
@@ -35,7 +35,7 @@ class BaseTemplate(object):
 
     # === Output Generating Methods ===
 
-    def preprocess(self, sources):
+    def preprocess(self, sources, root_link):
         """
         Setup the template for the project with the given sources.
 
@@ -46,11 +46,10 @@ class BaseTemplate(object):
         """
         pass
 
-    
     def generate_docs(self, sections):
         """
         Generates the document.
-        
+
         The argument sections is a generator yielding `(docs, code)` tuples.
         This **must** be a generator yielding strings to write to the out.
         If you insist on manipulating the whole file in memory, then just

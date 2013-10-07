@@ -5,11 +5,15 @@ pycclone.utils
 Utility functions
 """
 import os
-import re
 import sys
-import StringIO
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 DESTROOT = ''
+
 
 def destination(fname, outdir):
     """
@@ -18,9 +22,10 @@ def destination(fname, outdir):
     """
     if not outdir:
         return fname
-    
+
     filename = os.path.splitext(os.path.relpath(fname, DESTROOT))[0]
     return os.path.join(outdir, filename)
+
 
 def split_path(path):
     """
@@ -30,6 +35,7 @@ def split_path(path):
     while split[0]:
         split = list(os.path.split(split[0])) + split[1:]
     return split[1:]
+
 
 class file_or_stdout(object):
     """
@@ -44,7 +50,7 @@ class file_or_stdout(object):
 
     def __enter__(self):
         if not self.outdir:
-            self.fhandle = StringIO.StringIO()
+            self.fhandle = StringIO()
         else:
             outname = destination(self.fname, self.outdir) + self.ext
             outdir = os.path.dirname(outname)
@@ -60,6 +66,7 @@ class file_or_stdout(object):
             sys.stdout.write('\n')
             sys.stdout.flush()
         self.fhandle.close()
+
 
 class open_static(object):
     """

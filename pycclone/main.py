@@ -55,7 +55,7 @@ def main():
         help='Files to generate documentation for')
 
     # Filter out arguments that weren't actually passed on the commandline
-    args = parser.parse_args.__dict__.items()
+    args = parser.parse_args().__dict__.items()
     args = dict((k, v) for k, v in args if v is not None)
     logging.debug('Parsed args: %s', args)
 
@@ -102,7 +102,7 @@ def main():
     # Tell utils.destination which dir to treat as output root
     utils.DESTROOT = os.path.dirname(os.path.commonprefix(settings['src']))
     destination = lambda x: utils.destination(x, settings['directory'])
-    outfiles = map(destination, settings['src'])
+    outfiles = [destination(x) for x in settings['src']]
 
     template.preprocess(outfiles, settings['root_link'])
     for src in settings['src']:
