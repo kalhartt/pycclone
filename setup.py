@@ -1,10 +1,9 @@
 from setuptools import setup
 import sys
 
-if sys.version_info < (2, 7, 0):
-    install_requires_extras = ['importlib']
-else:
-    install_requires_extras = []
+install_requires = ['markdown', 'pygments']
+if sys.version_info < (2, 7):
+    install_requires = ['importlib', 'argparse']
 
 setup(
     name="pycclone",
@@ -27,6 +26,11 @@ setup(
         "pycclone": "data/*",
         "pycclone.templates": "data/*"
     },
-    install_requires=['markdown', 'pygments'] + install_requires_extras,
+    install_requires=install_requires,
     extras_requires={},
+    entry_points={
+        "console_scripts": [
+            "pycclone = pycclone.main:main",
+        ]
+    }
 )
