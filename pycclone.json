@@ -6,8 +6,8 @@
     },
     "template_args": {
         "stylesheets": [
-            "/pycclone/pygments.css",
-            "/pycclone/style.css",
+            "/pycclone/docs/pygments.css",
+            "/pycclone/docs/style.css",
             "//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css"
         ],
         "title": "Documentation"
