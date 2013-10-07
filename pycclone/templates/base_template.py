@@ -55,4 +55,5 @@ class BaseTemplate(object):
         If you insist on manipulating the whole file in memory, then just
         use yield instead of return at the end.
         """
-        pass
+        for docs, code in sections:
+            yield docs + code

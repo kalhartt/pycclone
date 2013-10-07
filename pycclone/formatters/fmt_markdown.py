@@ -5,8 +5,10 @@ pycclone.formatters.markdown
 Markdown document formatting
 """
 from markdown import markdown
+from pycclone.formatters import BaseFormatter
 
-class Formatter(object):
+
+class Formatter(BaseFormatter):
 
     def __init__(self, **kwargs):
         self.args = kwargs

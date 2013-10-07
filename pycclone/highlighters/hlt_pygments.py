@@ -6,10 +6,12 @@ pygment based code highlighther
 """
 import os
 import pygments
+from pycclone.highlighters import BaseHighlighter
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 
-class Highlighter(object):
+
+class Highlighter(BaseHighlighter):
 
     def __init__(self, **kwargs):
         self.args = kwargs

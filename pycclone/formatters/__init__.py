@@ -7,6 +7,10 @@ from imp import load_source
 from importlib import import_module
 from pycclone import USERDIR
 
+# Make BaseFormatter available at module level
+from pycclone.formatters.base_formatter import BaseFormatter
+
+
 # === get_formatter(name) ===
 def get_formatter(name):
     """
